@@ -1,3 +1,4 @@
+import 'package:elitequiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: eqColor,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
