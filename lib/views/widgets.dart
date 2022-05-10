@@ -2,11 +2,26 @@ import 'package:elitequiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-AppBar eqAppBar(title) {
-  return AppBar(
-    title: Text(title),
-    elevation: 0,
-  );
+AppBar eqAppBar(title, {bool rigthTitle = false}) {
+  if (rigthTitle) {
+    return AppBar(
+      elevation: 0,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Text(
+            title,
+            style: const TextStyle(fontSize: 24),
+          ),
+        ),
+      ],
+    );
+  } else {
+    return AppBar(
+      title: Text(title),
+      elevation: 0,
+    );
+  }
 }
 
 Widget eqText(text, {double size = 14, Color color = Colors.black}) {

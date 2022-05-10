@@ -1,3 +1,5 @@
+import 'package:elitequiz/utils/constants.dart';
+import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -10,6 +12,12 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: eqAppBar(
+        "Sign In",
+        rigthTitle: true,
+      ),
+      backgroundColor: eqColor,
+    );
   }
 }

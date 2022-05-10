@@ -1,4 +1,7 @@
 import 'package:elitequiz/utils/constants.dart';
+import 'package:elitequiz/utils/navigator.dart';
+import 'package:elitequiz/views/signin.dart';
+import 'package:elitequiz/views/signup.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -40,13 +43,23 @@ class Welcome extends StatelessWidget {
                         children: [
                           eqButton(
                             title: 'Sign up',
-                            onPressed: () {},
+                            onPressed: () {
+                              eqNavigatorPush(
+                                context: context,
+                                builder: const SignUp(),
+                              );
+                            },
                             textColor: Colors.white,
                             color: Colors.black,
                           ),
                           eqButton(
                             title: 'Sign in',
-                            onPressed: () {},
+                            onPressed: () {
+                              eqNavigatorPush(
+                                context: context,
+                                builder: const SignIn(),
+                              );
+                            },
                             textColor: Colors.black,
                             color: Colors.white,
                           ),
