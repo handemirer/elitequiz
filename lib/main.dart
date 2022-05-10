@@ -2,6 +2,7 @@ import 'package:elitequiz/models/my_user.dart';
 import 'package:elitequiz/utils/auth.dart';
 import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/views/welcome.dart';
+import 'package:elitequiz/views/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: eqColor,
         ),
-        home: const Welcome(),
+        home: const Wrapper(),
       ),
     );
   }

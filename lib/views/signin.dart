@@ -84,18 +84,27 @@ class _SignInState extends State<SignIn> {
                             const SizedBox(height: 32),
                             eqTextField(
                               hint: "Email",
-                              onChanged: (val) {},
+                              onChanged: (val) {
+                                email = val;
+                              },
                             ),
                             const SizedBox(height: 8),
                             eqTextField(
                                 hint: "Password",
-                                onChanged: (val) {},
+                                onChanged: (val) {
+                                  password = val;
+                                },
                                 password: true),
                             const SizedBox(height: 8),
                             // TODO forgot password
                             eqButtonRow(
                               title: 'Sign In',
-                              onPressed: () {},
+                              onPressed: () {
+                                _auth.signInWithEmailandPassword(
+                                  email,
+                                  password,
+                                );
+                              },
                               textColor: Colors.white,
                               color: eqColor,
                             ),

@@ -1,3 +1,4 @@
+import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -10,6 +11,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Center(child: eqText("a", color: Colors.red)),
+    );
   }
 }

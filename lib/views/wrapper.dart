@@ -9,8 +9,7 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<MyUser>(context);
-    // ignore: unnecessary_null_comparison
+    MyUser? user = Provider.of<MyUser?>(context, listen: true);
     if (user == null) {
       return const Welcome();
     } else {
