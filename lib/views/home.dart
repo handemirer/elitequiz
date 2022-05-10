@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:elitequiz/models/category.dart';
 import 'package:elitequiz/models/profile.dart';
 import 'package:elitequiz/utils/constants.dart';
@@ -15,8 +17,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    List<Category> categories =
+        Provider.of<List<Category>>(context, listen: true);
     return Scaffold(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -66,18 +71,40 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount:
-                Provider.of<List<Category>>(context, listen: true).length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: eqText(
-                    Provider.of<List<Category>>(context, listen: true)[index]
-                        .categoryName),
-              );
-            },
-          )
+          Expanded(
+              child: Container(
+            color: Colors.red,
+          )),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: eqText("Category", size: 26, color: Colors.black),
+          ),
+          Expanded(
+              child: Container(
+            color: Colors.amber,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  child: Column(
+                    children: [
+                      eqText(categories[index].categoryName),
+                      SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: Image.memory(
+                          base64Decode(categories[index].categoryPhoto),
+                        ),
+                      ),
+                      eqText(categories[index].quizCount + " Quiz"),
+                    ],
+                  ),
+                );
+              },
+            ),
+          )),
         ],
       ),
     );

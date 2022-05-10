@@ -77,6 +77,16 @@ BoxDecoration roundDecor(Color color) {
   );
 }
 
+BoxDecoration appBarRoundDecor(Color color) {
+  return BoxDecoration(
+    color: color,
+    borderRadius: const BorderRadius.only(
+      bottomLeft: Radius.circular(8.0),
+      bottomRight: Radius.circular(8.0),
+    ),
+  );
+}
+
 Widget eqButton({
   required String title,
   VoidCallback? onPressed,
