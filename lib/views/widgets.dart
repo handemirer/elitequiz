@@ -2,7 +2,7 @@ import 'package:elitequiz/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-AppBar eqAppBar(title, {bool rigthTitle = false}) {
+AppBar eqAppBar(title, {bool rigthTitle = false, List<Widget>? actions}) {
   if (rigthTitle) {
     return AppBar(
       elevation: 0,
@@ -20,6 +20,7 @@ AppBar eqAppBar(title, {bool rigthTitle = false}) {
     return AppBar(
       title: Text(title),
       elevation: 0,
+      actions: actions,
     );
   }
 }
@@ -94,5 +95,53 @@ Widget eqButton({
       elevation: 0,
       primary: color,
     ),
+  );
+}
+
+Widget eqButtonRow({
+  required String title,
+  VoidCallback? onPressed,
+  Color textColor = Colors.black,
+  Color color = eqColor,
+}) {
+  return ElevatedButton(
+    child: Text(
+      title,
+      style: TextStyle(
+        color: textColor,
+      ),
+    ),
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      minimumSize: const Size(double.maxFinite, 40),
+      elevation: 0,
+      primary: color,
+    ),
+  );
+}
+
+TextField eqTextField(
+    {required Null Function(dynamic val) onChanged,
+    required String hint,
+    bool password = false
+    // TODO password
+    }) {
+  return TextField(
+    decoration: InputDecoration(
+      labelText: hint,
+      labelStyle: const TextStyle(
+//        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: eqColor),
+      ),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: eqColor, width: 2),
+      ),
+    ),
+    onChanged: (val) {
+      onChanged.call(val);
+    },
   );
 }

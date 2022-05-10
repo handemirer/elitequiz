@@ -22,6 +22,7 @@ class AuthServices {
 
       return _userFromFirebaseUser(user);
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return null;
     }
