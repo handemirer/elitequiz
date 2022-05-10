@@ -1,5 +1,5 @@
 import 'package:elitequiz/models/my_user.dart';
-import 'package:elitequiz/views/home.dart';
+import 'package:elitequiz/views/frame.dart';
 import 'package:elitequiz/views/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const Welcome();
     } else {
-      return const Home();
+      return const Frame();
     }
   }
 }
