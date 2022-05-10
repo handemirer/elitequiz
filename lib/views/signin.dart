@@ -81,10 +81,16 @@ class _SignInState extends State<SignIn> {
                       children: [
                         Column(
                           children: [
-                            const SizedBox(height: 16),
-                            eqTextField(hint: "Email", onChanged: (val) {}),
+                            const SizedBox(height: 32),
+                            eqTextField(
+                              hint: "Email",
+                              onChanged: (val) {},
+                            ),
                             const SizedBox(height: 8),
-                            eqTextField(hint: "Password", onChanged: (val) {}),
+                            eqTextField(
+                                hint: "Password",
+                                onChanged: (val) {},
+                                password: true),
                             const SizedBox(height: 8),
                             // TODO forgot password
                             eqButtonRow(

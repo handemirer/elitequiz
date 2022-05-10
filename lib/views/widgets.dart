@@ -140,6 +140,7 @@ TextField eqTextField(
         borderSide: BorderSide(color: eqColor, width: 2),
       ),
     ),
+    obscureText: password,
     onChanged: (val) {
       onChanged.call(val);
     },
