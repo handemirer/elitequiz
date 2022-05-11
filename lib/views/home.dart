@@ -71,10 +71,55 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.all(32.0),
+            child: Expanded(
               child: Container(
-            color: Colors.red,
-          )),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32),
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: [
+                      0.3,
+                      0.9,
+                    ],
+                    colors: [
+                      Colors.amber.shade400,
+                      Colors.amber.shade600,
+                    ],
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SizedBox(height: 16),
+                    SizedBox(
+                      width: 160,
+                      height: 160,
+                      child: Image.memory(
+                        base64Decode(categories.first.categoryPhoto),
+                      ),
+                    ),
+                    Center(
+                      child: eqText(
+                        categories.first.categoryName,
+                        color: Colors.amber.shade800,
+                        size: 32,
+                      ),
+                    ),
+                    Center(
+                      child: eqText(
+                        categories.first.quizCount + " Quiz",
+                        size: 22,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: eqText("Category", size: 26, color: Colors.black),

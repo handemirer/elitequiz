@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elitequiz/models/category.dart';
 import 'package:elitequiz/models/question.dart';
 import 'package:elitequiz/utils/constants.dart';
@@ -58,7 +59,25 @@ class _CreateState extends State<Create> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        CollectionReference reference =
+                            FirebaseFirestore.instance.collection(
+                                'categories/${selectedCategory}/quizzes');
+
+                        var questionsMap = [];
+                        questions.forEach((element) {
+                          questionsMap.add({
+                            "question": element.question,
+                            "answer": element.answer,
+                            "a": element.a,
+                            "b": element.b,
+                            "c": element.c,
+                            "d": element.d,
+                          });
+                        });
+                        var data = {"questions": questionsMap};
+                        reference.add(data);
+                      },
                       child: const Center(
                         child: Padding(
                           padding: EdgeInsets.all(14.0),
@@ -77,6 +96,7 @@ class _CreateState extends State<Create> {
               margin: const EdgeInsets.all(8),
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: eqColor,
