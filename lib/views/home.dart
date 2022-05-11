@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:elitequiz/models/category.dart';
 import 'package:elitequiz/models/profile.dart';
+import 'package:elitequiz/utils/color.dart';
 import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
@@ -80,13 +81,13 @@ class _HomeState extends State<Home> {
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
-                    stops: [
+                    stops: const [
                       0.3,
                       0.9,
                     ],
                     colors: [
-                      Colors.amber.shade400,
-                      Colors.amber.shade600,
+                      eqColors[categories.first.categoryColor]!.shade400,
+                      eqColors[categories.first.categoryColor]!.shade600,
                     ],
                   ),
                 ),
@@ -104,7 +105,8 @@ class _HomeState extends State<Home> {
                     Center(
                       child: eqText(
                         categories.first.categoryName,
-                        color: Colors.amber.shade800,
+                        color:
+                            eqColors[categories.first.categoryColor]!.shade800,
                         size: 32,
                       ),
                     ),
@@ -126,25 +128,49 @@ class _HomeState extends State<Home> {
           ),
           Expanded(
               child: Container(
-            color: Colors.amber,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               itemBuilder: (context, index) {
-                return Container(
-                  child: Column(
-                    children: [
-                      eqText(categories[index].categoryName),
-                      SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: Image.memory(
-                          base64Decode(categories[index].categoryPhoto),
-                        ),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        stops: const [
+                          0.3,
+                          0.9,
+                        ],
+                        colors: [
+                          eqColors[categories[index].categoryColor]!.shade400,
+                          eqColors[categories[index].categoryColor]!.shade600,
+                        ],
                       ),
-                      eqText(categories[index].quizCount + " Quiz"),
-                    ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: Image.memory(
+                            base64Decode(categories[index].categoryPhoto),
+                          ),
+                        ),
+                        eqText(
+                          categories[index].categoryName,
+                          color: eqColors[categories[index].categoryColor]!
+                              .shade800,
+                          size: 18,
+                        ),
+                        eqText(categories[index].quizCount + " Quiz"),
+                      ],
+                    ),
                   ),
                 );
               },

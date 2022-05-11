@@ -5,12 +5,14 @@ class Category {
   String categoryName;
   String categoryPhoto;
   String quizCount;
+  String categoryColor;
 
   Category({
     required this.id,
     required this.categoryName,
     required this.categoryPhoto,
     required this.quizCount,
+    required this.categoryColor,
   });
 
   factory Category.fromJson(Map<String, dynamic> json, id) {
@@ -19,6 +21,7 @@ class Category {
       categoryName: json["categoryName"],
       categoryPhoto: json["categoryPhoto"],
       quizCount: json["quizCount"],
+      categoryColor: json["categoryColor"],
     );
   }
 
