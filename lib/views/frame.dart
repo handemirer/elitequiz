@@ -2,6 +2,7 @@ import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/utils/database.dart';
 import 'package:elitequiz/views/create.dart';
 import 'package:elitequiz/views/home.dart';
+import 'package:elitequiz/views/setting.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -17,14 +18,7 @@ class _FrameState extends State<Frame> {
   List<Widget> pages = [
     const Home(),
     const Create(),
-    Center(
-      child: eqButton(
-        title: "Create Profile",
-        onPressed: () {
-          Database().CreateProfile();
-        },
-      ),
-    ),
+    const Setting(),
   ];
 
   @override

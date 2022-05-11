@@ -5,6 +5,7 @@ import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class Create extends StatefulWidget {
   const Create({Key? key}) : super(key: key);
@@ -14,6 +15,8 @@ class Create extends StatefulWidget {
 }
 
 class _CreateState extends State<Create> {
+  String selectedCategory = "finance";
+
   List<Question> questions = [
     Question(
         id: "0",
@@ -24,18 +27,16 @@ class _CreateState extends State<Create> {
         d: "d",
         answer: "answer")
   ];
+
   @override
   Widget build(BuildContext context) {
+    List<String> categories = [];
     List<Category> categories2 =
         Provider.of<List<Category>>(context, listen: true);
-    String selectedCategory = "";
-    List<String> categories = [];
 
     for (var e in categories2) {
       categories.add(e.id);
     }
-    selectedCategory = categories.first;
-
     return Scaffold(
       backgroundColor: Colors.black12,
       body: SingleChildScrollView(
@@ -60,13 +61,14 @@ class _CreateState extends State<Create> {
                     ),
                     InkWell(
                       onTap: () {
+                        eqShowDialogLoading(context);
                         CollectionReference reference =
                             FirebaseFirestore.instance.collection(
-                                'categories/${selectedCategory}/quizzes');
+                                'categories/${selectedCategory}/quizzes/${Uuid().v1()}/question');
 
                         var questionsMap = [];
                         questions.forEach((element) {
-                          questionsMap.add({
+                          reference.add({
                             "question": element.question,
                             "answer": element.answer,
                             "a": element.a,
@@ -75,8 +77,8 @@ class _CreateState extends State<Create> {
                             "d": element.d,
                           });
                         });
-                        var data = {"questions": questionsMap};
-                        reference.add(data);
+                        Navigator.pop(context);
+                        eqShowDialogSuccess(context);
                       },
                       child: const Center(
                         child: Padding(
@@ -103,26 +105,23 @@ class _CreateState extends State<Create> {
                   width: 2,
                 ),
               ),
-              child: DropdownButton(
-                hint: const Text("Kategori Seçiniz"),
+              child: DropdownButton<String>(
+                //hint: const Text("Kategori Seçiniz"),
                 isExpanded: true,
                 value: selectedCategory,
                 underline: Container(height: 0),
                 icon: const Icon(Icons.arrow_drop_down),
                 items: categories.map<DropdownMenuItem<String>>(
-                  (String value) {
+                  (String item) {
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                      value: item,
+                      child: Text(item),
                     );
                   },
                 ).toList(),
-                onChanged: (String? newValue) {
-                  setState(
-                    () {
-                      selectedCategory = newValue!;
-                    },
-                  );
+                onChanged: (newValue) {
+                  selectedCategory = newValue!;
+                  setState(() {});
                 },
               ),
             ),
@@ -295,4 +294,41 @@ class _CreateState extends State<Create> {
       ),
     );
   }
+}
+
+Future eqShowDialogSuccess(context) async {
+  await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: eqText("İşlem Durumu"),
+          content: eqText("İşlem Başarılı"),
+          actions: [
+            eqButton(
+                title: "Tamam",
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                })
+          ],
+        );
+      });
+}
+
+Future eqShowDialogLoading(context) async {
+  await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Center(
+                child: CircularProgressIndicator(),
+              ),
+            ],
+          ),
+        );
+      });
 }

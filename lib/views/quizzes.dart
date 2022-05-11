@@ -13,7 +13,9 @@ class Quizzes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: eqAppBar(id),
+      appBar: eqAppBar(id.substring(0, 1).toUpperCase() +
+          id.substring(1, id.length) +
+          " Category"),
       body: Column(
         children: [
           Container(

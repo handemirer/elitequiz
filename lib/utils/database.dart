@@ -15,11 +15,13 @@ class Database {
         .then((value) {
       value.docs.forEach((element) {
         temp = Profile(
-          id: "",
-          name: element.data()["name"],
-          point: 8,
-          profilePhoto: "",
-        );
+            id: "",
+            name: element.data()["name"],
+            point: 8,
+            profilePhoto: "",
+            type1: 0,
+            type2: 0,
+            type3: 0);
       });
     });
     return temp;

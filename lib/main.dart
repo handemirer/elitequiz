@@ -45,7 +45,14 @@ class MyApp extends StatelessWidget {
         ),
         StreamProvider<Profile>(
           create: (context) => profile(),
-          initialData: Profile(id: "", name: "", point: 0, profilePhoto: ""),
+          initialData: Profile(
+              id: "",
+              name: "",
+              point: 0,
+              profilePhoto: "",
+              type1: 0,
+              type2: 0,
+              type3: 0),
         ),
         StreamProvider<MyUser?>(
           create: (context) => AuthServices().myuser,

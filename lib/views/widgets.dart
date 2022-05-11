@@ -87,6 +87,31 @@ BoxDecoration appBarRoundDecor(Color color) {
   );
 }
 
+Widget eqScore({required String score, int type = 1}) {
+  Color color = Colors.green;
+  switch (type) {
+    case 1:
+      color = Colors.green;
+      break;
+    case 2:
+      color = Colors.amber;
+      break;
+    case 3:
+      color = Colors.red;
+      break;
+    default:
+  }
+  return CircleAvatar(
+    backgroundColor: Colors.white,
+    radius: 32,
+    child: CircleAvatar(
+      radius: 32,
+      child: eqText(score, color: color, size: 24),
+      backgroundColor: color.withAlpha(48),
+    ),
+  );
+}
+
 Widget eqButton({
   required String title,
   VoidCallback? onPressed,
