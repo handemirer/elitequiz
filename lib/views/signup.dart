@@ -29,12 +29,15 @@ class _SignUpState extends State<SignUp> {
           onTap: () {
             eqNavigatorPush(context: context, builder: const SignIn());
           },
-          child: const Center(
-            child: Padding(
-              padding: EdgeInsets.all(14.0),
-              child: Text(
-                "Sign In",
-                style: TextStyle(fontSize: 20),
+          child: Center(
+            child: InkWell(
+              onTap: () {},
+              child: const Padding(
+                padding: EdgeInsets.all(14.0),
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
             ),
           ),
@@ -85,12 +88,16 @@ class _SignUpState extends State<SignUp> {
                             const SizedBox(height: 32),
                             eqTextField(
                               hint: "Email",
-                              onChanged: (val) {},
+                              onChanged: (val) {
+                                email = val;
+                              },
                             ),
                             const SizedBox(height: 8),
                             eqTextField(
                                 hint: "Password",
-                                onChanged: (val) {},
+                                onChanged: (val) {
+                                  password = val;
+                                },
                                 password: true),
                             const SizedBox(height: 8),
                             eqTextField(
@@ -99,8 +106,14 @@ class _SignUpState extends State<SignUp> {
                                 password: true),
                             const SizedBox(height: 8),
                             eqButtonRow(
-                              title: 'Sign In',
-                              onPressed: () {},
+                              title: 'Sign Up',
+                              onPressed: () {
+                                if (email != "" && password != "") {
+                                  AuthServices().signUpWithEmailandPassword(
+                                      email, password);
+                                  Navigator.of(context).pop();
+                                }
+                              },
                               textColor: Colors.white,
                               color: eqColor,
                             ),

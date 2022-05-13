@@ -86,4 +86,16 @@ class Database {
       );
     }
   }
+
+  void updateProfile(profilePhoto, name) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+      {
+        "profilePhoto": profilePhoto,
+        "name": name,
+      },
+    );
+  }
 }

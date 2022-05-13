@@ -1,32 +1,67 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:elitequiz/models/profile.dart';
 import 'package:elitequiz/utils/constants.dart';
+import 'package:elitequiz/utils/database.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class Edit extends StatefulWidget {
-  const Edit({Key? key}) : super(key: key);
+  String name;
+  String profilePhoto;
+  Edit({Key? key, required this.name, required this.profilePhoto})
+      : super(key: key);
 
   @override
   State<Edit> createState() => _EditState();
 }
 
 class _EditState extends State<Edit> {
+  String name = "";
+  String profilePhoto = "";
+
+  @override
+  void initState() {
+    name = widget.name;
+    profilePhoto = widget.profilePhoto;
+    super.initState();
+  }
+
+  void profilePicture() async {
+    XFile? _tempImage = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+        maxHeight: 512,
+        maxWidth: 512);
+    if (_tempImage != null) {
+      Uint8List byte = await _tempImage.readAsBytes();
+      profilePhoto = base64Encode(byte.toList());
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Profile profile = Provider.of<Profile>(context, listen: true);
     return Scaffold(
       backgroundColor: eqColor,
       appBar: eqAppBar("Edit Profile", actions: [
         InkWell(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Center(
-              child: eqText(
-                "Save",
-                color: Colors.white,
-                size: 26,
+            child: InkWell(
+              onTap: () {
+                Database().updateProfile(profilePhoto, name);
+                Navigator.of(context).pop();
+              },
+              child: Center(
+                child: eqText(
+                  "Save",
+                  color: Colors.white,
+                  size: 26,
+                ),
               ),
             ),
           ),
@@ -39,10 +74,15 @@ class _EditState extends State<Edit> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 64,
-                backgroundColor: Colors.white,
-                child: Image.memory(base64Decode(profile.profilePhoto)),
+              child: InkWell(
+                onTap: () {
+                  profilePicture();
+                },
+                child: CircleAvatar(
+                  radius: 64,
+                  backgroundColor: Colors.white,
+                  child: Image.memory(base64Decode(profilePhoto)),
+                ),
               ),
             ),
             Expanded(
@@ -62,17 +102,9 @@ class _EditState extends State<Edit> {
                             const SizedBox(height: 32),
                             eqTextField(
                               hint: "Name",
-                              onChanged: (val) {},
-                            ),
-                            const SizedBox(height: 8),
-                            eqTextField(
-                              hint: "Surname",
-                              onChanged: (val) {},
-                            ),
-                            const SizedBox(height: 8),
-                            eqTextField(
-                              hint: "Mail",
-                              onChanged: (val) {},
+                              onChanged: (val) {
+                                name = val;
+                              },
                             ),
                           ],
                         ),

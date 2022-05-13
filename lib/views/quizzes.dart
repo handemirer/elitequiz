@@ -33,7 +33,15 @@ class Quizzes extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  eqText("Your Progress", color: Colors.black, size: 18)
+                  eqText("Your Progress", color: Colors.black, size: 18),
+                  const SizedBox(height: 8),
+                  const LinearProgressIndicator(
+                    backgroundColor: Colors.white,
+                    color: Colors.black,
+                    value: 0.0,
+                    semanticsLabel: 'Linear progress indicator',
+                  ),
+                  const SizedBox(height: 8),
                 ],
               ),
             ),

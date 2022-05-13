@@ -10,8 +10,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('themedata');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
@@ -59,14 +62,23 @@ class MyApp extends StatelessWidget {
           initialData: null,
         ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Elite Quiz',
-        themeMode: ThemeMode.dark,
-        theme: ThemeData(
-          primarySwatch: eqColor,
-        ),
-        home: const Wrapper(),
+      child: ValueListenableBuilder<Box>(
+        valueListenable: Hive.box('themedata').listenable(),
+        builder: (context, box, widget) {
+          var darkMode = box.get('darkmode', defaultValue: false);
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Elite Quiz',
+            themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
+            darkTheme: ThemeData(
+              primarySwatch: eqColor,
+            ).copyWith(scaffoldBackgroundColor: Colors.black54),
+            theme: ThemeData(
+              primarySwatch: eqColor,
+            ),
+            home: const Wrapper(),
+          );
+        },
       ),
     );
   }

@@ -104,6 +104,7 @@ class _SignInState extends State<SignIn> {
                                   email,
                                   password,
                                 );
+                                Navigator.of(context).pop();
                               },
                               textColor: Colors.white,
                               color: eqColor,

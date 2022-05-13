@@ -22,6 +22,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     List<Category> categories =
         Provider.of<List<Category>>(context, listen: true);
+    Profile profile = Provider.of<Profile>(context, listen: true);
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,11 +41,13 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.all(4.0),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.military_tech,
-                            color: Colors.amber,
+                        ClipOval(
+                          child: const CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.military_tech,
+                              color: Colors.amber,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -63,12 +66,11 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                const CircleAvatar(
-                  radius: 32,
-                  backgroundColor: eqColor,
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
+                ClipOval(
+                  child: CircleAvatar(
+                    radius: 32,
+                    backgroundColor: eqColor,
+                    child: Image.memory(base64Decode(profile.profilePhoto)),
                   ),
                 ),
               ],

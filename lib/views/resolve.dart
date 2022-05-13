@@ -19,6 +19,8 @@ class Resolve extends StatefulWidget {
 
 class _ResolveState extends State<Resolve> {
   double progress = 0.0;
+  int p0 = 0;
+  int p1 = 0;
   List<Widget> cardList = [];
   int type1 = 0;
   int type2 = 0;
@@ -142,6 +144,8 @@ class _ResolveState extends State<Resolve> {
   }
 
   void removeCards(index) {
+    p0 += 1;
+    progress = p0.toDouble() / p1.toDouble();
     setState(() {
       cardList.removeAt(index);
     });
@@ -149,6 +153,7 @@ class _ResolveState extends State<Resolve> {
 
   List<Widget> _generateCards(List<Question> questions) {
     List<Widget> cardList = [];
+    p1 = questions.length;
     for (int x = 0; x < questions.length; x++) {
       cardList.add(
         Positioned(
@@ -355,17 +360,17 @@ class _ResolveState extends State<Resolve> {
         margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         decoration: boxDecoration(
           showShadow: false,
-          bgColor: Colors.white,
+          bgColor: eqColor,
           radius: 10,
-          color: Colors.amber,
+          color: eqColor,
         ),
         padding: const EdgeInsets.fromLTRB(16, 10, 16, 10),
         width: 320,
         child: Row(
           children: <Widget>[
-            Text(option, style: TextStyle(color: Colors.blue)),
+            Text(option, style: TextStyle(color: Colors.white)),
             SizedBox(width: 5),
-            Text(option1, style: TextStyle(color: Colors.blue)),
+            Text(option1, style: TextStyle(color: Colors.white)),
           ],
         ),
       ),

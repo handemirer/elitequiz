@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:elitequiz/models/profile.dart';
+import 'package:elitequiz/utils/auth.dart';
 import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/utils/database.dart';
 import 'package:elitequiz/utils/navigator.dart';
@@ -30,15 +31,19 @@ class _SettingState extends State<Setting> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              radius: 64,
-              backgroundColor: Colors.white,
-              child: Image.memory(base64Decode(profile.profilePhoto)),
+            child: ClipOval(
+              child: CircleAvatar(
+                radius: 64,
+                backgroundColor: Colors.white,
+                child: Image.memory(
+                  base64Decode(profile.profilePhoto),
+                ),
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: eqText("Lisa Writer", color: Colors.black, size: 28),
+            child: eqText(profile.name, color: Colors.black, size: 28),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -74,7 +79,9 @@ class _SettingState extends State<Setting> {
                               onTap: () {
                                 eqNavigatorPush(
                                   context: context,
-                                  builder: const Edit(),
+                                  builder: Edit(
+                                      name: profile.name,
+                                      profilePhoto: profile.profilePhoto),
                                 );
                               },
                               leading: const Icon(
@@ -133,6 +140,12 @@ class _SettingState extends State<Setting> {
               ),
             ),
           ),
+          eqButtonRow(
+              title: "Sign Out",
+              textColor: Colors.white,
+              onPressed: () {
+                AuthServices().signOut();
+              })
         ],
       ),
     );
