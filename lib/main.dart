@@ -62,6 +62,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Elite Quiz',
+        themeMode: ThemeMode.dark,
         theme: ThemeData(
           primarySwatch: eqColor,
         ),

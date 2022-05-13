@@ -57,7 +57,7 @@ class _SettingState extends State<Setting> {
           Expanded(
             child: Container(
               width: double.maxFinite,
-              decoration: roundDecor(Colors.grey.shade400),
+              decoration: roundDecor(Colors.grey.shade300),
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 32, right: 32, top: 8.0, bottom: 8.0),
