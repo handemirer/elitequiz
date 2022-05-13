@@ -3,6 +3,10 @@ import 'dart:convert';
 import 'package:elitequiz/models/profile.dart';
 import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/utils/database.dart';
+import 'package:elitequiz/utils/navigator.dart';
+import 'package:elitequiz/views/edit.dart';
+import 'package:elitequiz/views/score.dart';
+import 'package:elitequiz/views/theme.dart' as t;
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +71,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(height: 32),
                           Card(
                             child: ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                eqNavigatorPush(
+                                  context: context,
+                                  builder: const Edit(),
+                                );
+                              },
                               leading: const Icon(
                                 Icons.create,
                                 color: Colors.amber,
@@ -82,7 +91,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(height: 8),
                           Card(
                             child: ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                eqNavigatorPush(
+                                  context: context,
+                                  builder: const Score(),
+                                );
+                              },
                               leading: const Icon(
                                 Icons.grid_view,
                                 color: Colors.blue,
@@ -97,7 +111,12 @@ class _SettingState extends State<Setting> {
                           const SizedBox(height: 8),
                           Card(
                             child: ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                eqNavigatorPush(
+                                  context: context,
+                                  builder: const t.Theme(),
+                                );
+                              },
                               leading: const Icon(Icons.build),
                               title: eqText("Settings"),
                               trailing: const Icon(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elitequiz/models/question.dart';
 import 'package:elitequiz/utils/constants.dart';
+import 'package:elitequiz/utils/database.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,9 @@ class Resolve extends StatefulWidget {
 class _ResolveState extends State<Resolve> {
   double progress = 0.0;
   List<Widget> cardList = [];
+  int type1 = 0;
+  int type2 = 0;
+  int type3 = 0;
 
   void initialize() async {
     List<Question> questions = [];
@@ -68,15 +72,17 @@ class _ResolveState extends State<Resolve> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    eqScore(score: "10", type: 1),
-                    eqScore(score: "0", type: 2),
-                    eqScore(score: "1", type: 3),
+                    eqScore(score: type1.toString(), type: 1),
+                    eqScore(score: type2.toString(), type: 2),
+                    eqScore(score: type3.toString(), type: 3),
                   ],
                 ),
               ),
               const SizedBox(height: 8),
               eqButtonRow(
                   onPressed: () {
+                    Database()
+                        .updateProfileScore(type1, type2, type3, widget.quizid);
                     Navigator.of(context).pop();
                   },
                   title: "Go Back!",
@@ -149,6 +155,7 @@ class _ResolveState extends State<Resolve> {
           top: 10,
           child: Draggable(
             onDragEnd: (drag) {
+              type2++;
               if (x == 0) {
                 setState(() {
                   finishCard();
@@ -185,18 +192,62 @@ class _ResolveState extends State<Resolve> {
                               const EdgeInsets.only(top: 10.0, bottom: 10.0),
                           child: Column(
                             children: <Widget>[
-                              quizCardSelection("A.", questions[x].a, () {
-                                /*
+                              quizCardSelection(
+                                "A.",
+                                questions[x].a,
+                                () {
+                                  if (questions[x].answer == "a") {
+                                    type1++;
+                                  } else {
+                                    type3++;
+                                  }
+                                  if (x == 0) {
+                                    setState(() {
+                                      finishCard();
+                                    });
+                                  }
+                                  removeCards(x);
+                                },
+                              ),
+                              quizCardSelection("B.", questions[x].b, () {
+                                if (questions[x].answer == "b") {
+                                  type1++;
+                                } else {
+                                  type3++;
+                                }
                                 if (x == 0) {
                                   setState(() {
-                                    const QuizResult().launch(context);
+                                    finishCard();
                                   });
                                 }
-                                removeCards(x);*/
+                                removeCards(x);
                               }),
-                              quizCardSelection("B.", questions[x].b, () {}),
-                              quizCardSelection("C.", questions[x].c, () {}),
-                              quizCardSelection("D.", questions[x].d, () {}),
+                              quizCardSelection("C.", questions[x].c, () {
+                                if (questions[x].answer == "c") {
+                                  type1++;
+                                } else {
+                                  type3++;
+                                }
+                                if (x == 0) {
+                                  setState(() {
+                                    finishCard();
+                                  });
+                                }
+                                removeCards(x);
+                              }),
+                              quizCardSelection("D.", questions[x].d, () {
+                                if (questions[x].answer == "a") {
+                                  type1++;
+                                } else {
+                                  type3++;
+                                }
+                                if (x == 0) {
+                                  setState(() {
+                                    finishCard();
+                                  });
+                                }
+                                removeCards(x);
+                              }),
                             ],
                           ))
                     ],
@@ -230,17 +281,57 @@ class _ResolveState extends State<Resolve> {
                       child: Column(
                         children: <Widget>[
                           quizCardSelection("A.", questions[x].a, () {
-                            /*
-                                if (x == 0) {
-                                  setState(() {
-                                    const QuizResult().launch(context);
-                                  });
-                                }
-                                removeCards(x);*/
+                            if (questions[x].answer == "a") {
+                              type1++;
+                            } else {
+                              type3++;
+                            }
+                            if (x == 0) {
+                              setState(() {
+                                finishCard();
+                              });
+                            }
+                            removeCards(x);
                           }),
-                          quizCardSelection("B.", questions[x].b, () {}),
-                          quizCardSelection("C.", questions[x].c, () {}),
-                          quizCardSelection("D.", questions[x].d, () {}),
+                          quizCardSelection("B.", questions[x].b, () {
+                            if (questions[x].answer == "b") {
+                              type1++;
+                            } else {
+                              type3++;
+                            }
+                            if (x == 0) {
+                              setState(() {
+                                finishCard();
+                              });
+                            }
+                            removeCards(x);
+                          }),
+                          quizCardSelection("C.", questions[x].c, () {
+                            if (questions[x].answer == "c") {
+                              type1++;
+                            } else {
+                              type3++;
+                            }
+                            if (x == 0) {
+                              setState(() {
+                                finishCard();
+                              });
+                            }
+                            removeCards(x);
+                          }),
+                          quizCardSelection("D.", questions[x].d, () {
+                            if (questions[x].answer == "d") {
+                              type1++;
+                            } else {
+                              type3++;
+                            }
+                            if (x == 0) {
+                              setState(() {
+                                finishCard();
+                              });
+                            }
+                            removeCards(x);
+                          }),
                         ],
                       ),
                     )

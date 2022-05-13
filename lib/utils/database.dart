@@ -38,6 +38,54 @@ class Database {
       },
     );
   }
+
+  void updateProfileScore(type1, type2, type3, quizid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .update(
+      {
+        "point": FieldValue.increment(type1 * 5),
+        "type1": FieldValue.increment(type1),
+        "type2": FieldValue.increment(type2),
+        "type3": FieldValue.increment(type3),
+      },
+    );
+    DocumentSnapshot ds = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("score")
+        .doc(quizid)
+        .get();
+
+    if (ds.exists) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("score")
+          .doc(quizid)
+          .update(
+        {
+          "type1": FieldValue.increment(type1),
+          "type2": FieldValue.increment(type2),
+          "type3": FieldValue.increment(type3),
+        },
+      );
+    } else {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .collection("score")
+          .doc(quizid)
+          .set(
+        {
+          "type1": FieldValue.increment(type1),
+          "type2": FieldValue.increment(type2),
+          "type3": FieldValue.increment(type3),
+        },
+      );
+    }
+  }
 }
 /*
 

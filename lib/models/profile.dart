@@ -19,9 +19,9 @@ class Profile {
     required this.type3,
   });
 
-  factory Profile.fromJson(Map<String, dynamic> json) {
+  factory Profile.fromJson(Map<String, dynamic> json, id) {
     return Profile(
-      id: json["id"],
+      id: id,
       name: json["name"],
       profilePhoto: json["profilePhoto"],
       point: json["point"].toInt(),
@@ -37,9 +37,9 @@ class Profile {
   }
 */
   factory Profile.fromFirestore(DocumentSnapshot documentSnapshot) {
-    Profile profile =
-        Profile.fromJson(documentSnapshot.data() as Map<String, dynamic>);
-    profile.id = documentSnapshot.id;
+    Profile profile = Profile.fromJson(
+        documentSnapshot.data() as Map<String, dynamic>, documentSnapshot.id);
+
     return profile;
   }
 }
