@@ -83,7 +83,7 @@ class Quizzes extends StatelessWidget {
                               ));
                         },
                         title: eqText("${index + 1}. Quiz"),
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.arrow_forward,
                           color: Colors.black,
                         ),
@@ -99,10 +99,21 @@ class Quizzes extends StatelessWidget {
     );
   }
 
+/*
   Stream<List<Quiz>> quizzes(id) {
-    var ref = FirebaseFirestore.instance.collection('categories/$id/quizzes');
+    var ref = FirebaseFirestore.instance.collection('categories/$id/quizzes/');
 
     return ref.snapshots().map(
         (list) => list.docs.map((doc) => Quiz.fromFirestore(doc)).toList());
+  }*/
+
+  Stream<List<Quiz>> quizzes(id) {
+    return FirebaseFirestore.instance
+        .collection('categories/$id/quizzes')
+        .snapshots()
+        .map((querySnap) => querySnap.docs
+            .map((doc) => Quiz.fromFirestore(doc))
+            .toList()
+            .toList());
   }
 }

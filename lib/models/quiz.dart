@@ -7,7 +7,10 @@ class Quiz {
     required this.id,
   });
 
-  factory Quiz.fromJson(Map<String, dynamic> json, id) {
+  factory Quiz.fromJson(
+    //  Map<String, dynamic> json,
+    id,
+  ) {
     return Quiz(
       id: id,
     );
@@ -20,7 +23,8 @@ class Quiz {
 */
   factory Quiz.fromFirestore(DocumentSnapshot documentSnapshot) {
     Quiz quiz = Quiz.fromJson(
-        documentSnapshot.data() as Map<String, dynamic>, documentSnapshot.id);
+        //documentSnapshot.data() as Map<String, dynamic>,
+        documentSnapshot.id);
     return quiz;
   }
 }

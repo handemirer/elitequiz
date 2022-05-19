@@ -78,10 +78,12 @@ class _EditState extends State<Edit> {
                 onTap: () {
                   profilePicture();
                 },
-                child: CircleAvatar(
-                  radius: 64,
-                  backgroundColor: Colors.white,
-                  child: Image.memory(base64Decode(profilePhoto)),
+                child: ClipOval(
+                  child: CircleAvatar(
+                    radius: 64,
+                    backgroundColor: Colors.white,
+                    child: Image.memory(base64Decode(profilePhoto)),
+                  ),
                 ),
               ),
             ),

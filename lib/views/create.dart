@@ -25,7 +25,7 @@ class _CreateState extends State<Create> {
         b: "b",
         c: "c",
         d: "d",
-        answer: "answer")
+        answer: "a")
   ];
 
   @override
@@ -60,15 +60,30 @@ class _CreateState extends State<Create> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
                         eqShowDialogLoading(context);
+
+                        QuerySnapshot querySnapshot = await FirebaseFirestore
+                            .instance
+                            .collection('categories')
+                            .doc(selectedCategory)
+                            .collection("quizzes")
+                            .get();
+
                         CollectionReference reference =
                             FirebaseFirestore.instance.collection(
-                                'categories/${selectedCategory}/quizzes/${Uuid().v1()}/question');
+                          'categories/${selectedCategory}/quizzes/${querySnapshot.docs.length + 1}/question',
+                        );
+                        await FirebaseFirestore.instance
+                            .collection('categories')
+                            .doc("${selectedCategory}")
+                            .collection("quizzes")
+                            .doc("${querySnapshot.docs.length + 1}")
+                            .set({"value": "true"});
 
                         var questionsMap = [];
-                        questions.forEach((element) {
-                          reference.add({
+                        questions.forEach((element) async {
+                          await reference.add({
                             "question": element.question,
                             "answer": element.answer,
                             "a": element.a,
