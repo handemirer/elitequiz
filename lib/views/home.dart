@@ -5,10 +5,14 @@ import 'package:elitequiz/models/profile.dart';
 import 'package:elitequiz/utils/color.dart';
 import 'package:elitequiz/utils/constants.dart';
 import 'package:elitequiz/utils/navigator.dart';
+import 'package:elitequiz/views/edit.dart';
 import 'package:elitequiz/views/quizzes.dart';
+import 'package:elitequiz/views/score.dart';
 import 'package:elitequiz/views/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:elitequiz/views/theme.dart' as t;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -24,6 +28,108 @@ class _HomeState extends State<Home> {
         Provider.of<List<Category>>(context, listen: true);
     Profile profile = Provider.of<Profile>(context, listen: true);
     return Scaffold(
+      drawer: Drawer(
+          child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/logo/logo.svg",
+                  height: 64,
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/logo/elite.svg",
+                      height: 32,
+                    ),
+                    SvgPicture.asset(
+                      "assets/logo/quiz.svg",
+                      height: 32,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          Flexible(
+              child: Container(
+            color: eqColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        eqNavigatorPush(
+                          context: context,
+                          builder: Edit(
+                              name: profile.name,
+                              profilePhoto: profile.profilePhoto),
+                        );
+                      },
+                      leading: const Icon(
+                        Icons.create,
+                        color: Colors.amber,
+                      ),
+                      title: eqText("Edit Profile"),
+                      trailing: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        eqNavigatorPush(
+                          context: context,
+                          builder: const Score(),
+                        );
+                      },
+                      leading: const Icon(
+                        Icons.grid_view,
+                        color: Colors.blue,
+                      ),
+                      title: eqText("See All Category Achive"),
+                      trailing: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Card(
+                    child: ListTile(
+                      onTap: () {
+                        eqNavigatorPush(
+                          context: context,
+                          builder: const t.Theme(),
+                        );
+                      },
+                      leading: const Icon(Icons.build),
+                      title: eqText("Settings"),
+                      trailing: const Icon(
+                        Icons.arrow_forward,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )),
+        ],
+      )),
+      appBar: AppBar(
+        title: const Text("Elite Quiz"),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
